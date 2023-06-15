@@ -33,3 +33,25 @@ GROUP BY
 5. SELECT COUNT(device_id) FROM `device_videogame` GROUP BY `device_id`; 
 
 6. SELECT `videogame_id` FROM `reviews` GROUP BY `videogame_id` ORDER BY AVG(rating); 
+
+JOIN
+
+1. SELECT DISTINCT players.* FROM `players` JOIN reviews ON players.id = reviews.player_id; 
+
+2. SELECT DISTINCT videogames.* FROM `videogames` JOIN `tournament_videogame` 
+ON videogames.id = tournament_videogame.videogame_id JOIN `tournaments` ON tournament_videogame.tournament_id = tournaments.id WHERE tournaments.year = 2016; 
+
+3. SELECT categories.name as category, videogames.* FROM `categories` 
+JOIN category_videogame ON category_videogame.category_id = categories.id
+JOIN videogames ON category_videogame.videogame_id = videogames.id;
+
+4. SELECT DISTINCT software_houses.* FROM `software_houses`
+JOIN videogames ON videogames.software_house_id = software_houses.id
+WHERE YEAR(videogames.release_date)> "2020";
+
+5. SELECT awards.name as award, software_houses.name as Software_house, videogames.name as videogame FROM `awards`
+JOIN award_videogame ON award_videogame.award_id = awards.id
+JOIN videogames ON videogames.id = award_videogame.videogame_id
+JOIN software_houses ON videogames.software_house_id = software_houses.id;
+
+6. SELECT DISTINCT categories.name as category, pegi_labels.name as pegi, videogames.name as videogame FROM pegi_labels JOIN pegi_label_videogame ON pegi_label_videogame.pegi_label_id = pegi_labels.id JOIN videogames ON pegi_label_videogame.videogame_id = videogames.id JOIN category_videogame ON category_videogame.videogame_id = videogames.id JOIN categories ON category_videogame.category_id = categories.id JOIN reviews ON reviews.videogame_id = videogames.id WHERE reviews.rating >= 4 AND reviews.rating <= 5; 
